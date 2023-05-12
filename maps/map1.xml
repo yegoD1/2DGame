@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Information>
+    <MapName>TestMap1</MapName>
+    <MapData>
+        <Block>
+            <X>0</X>
+            <Y>0</Y>
+            <Type>grass</Type>
+        </Block>
+        <Block>
+            <X>1</X>
+            <Y>1</Y>
+            <Type>grass</Type>
+        </Block>
+        <Block>
+            <X>2</X>
+            <Y>2</Y>
+            <Type>grass</Type>
+        </Block>
+        <Block>
+            <X>3</X>
+            <Y>3</Y>
+            <Type>grass</Type>
+        </Block>
+        <Block>
+            <X>4</X>
+            <Y>4</Y>
+            <Type>grass</Type>
+        </Block>
+    </MapData>
+</Information>
