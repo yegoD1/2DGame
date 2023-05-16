@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <Information>
-    <MapInformation Name="TestMap1" SpawnX="3" SpawnY="0"/>
+    <MapInformation Name="TestMap1" SpawnX="0" SpawnY="1"/>
     <MapData>
         <Block Type="grass" X="0" Y="0"/>
+        <Block Type="grass" X="1" Y="0"/>
+        <Block Type="grass" X="2" Y="0"/>
+        <Block Type="grass" X="3" Y="0"/>
+        <Block Type="grass" X="4" Y="0"/>
+        <Block Type="grass" X="5" Y="0"/>
+        <Block Type="grass" X="6" Y="0"/>
+        <Block Type="grass" X="7" Y="0"/>
+        <Block Type="grass" X="8" Y="0"/>
         <Block Type="grass" X="1" Y="1"/>
         <Block Type="grass" X="2" Y="2"/>
         <Block Type="grass" X="3" Y="3"/>

@@ -1,6 +1,4 @@
-import java.awt.Image;
 import java.io.File;
-import javax.imageio.ImageIO;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,7 +23,7 @@ public class Map extends Ownable{
         super(owningObject);
         this.gridSize = gridSize;
 
-        renderer = getOwner();
+        renderer = (Renderer) getOwner();
 
         loadMapData(mapDir);
     }
@@ -47,8 +45,8 @@ public class Map extends Ownable{
         
             NamedNodeMap mapNode = doc.getElementsByTagName("MapInformation").item(0).getAttributes();
             name = mapNode.getNamedItem("Name").getNodeValue();
-            xStart = mapNode.getNamedItem("SpawnX").getNodeType();
-            yStart = mapNode.getNamedItem("SpawnY").getNodeType();
+            xStart = Integer.parseInt(mapNode.getNamedItem("SpawnX").getNodeValue());
+            yStart = Integer.parseInt(mapNode.getNamedItem("SpawnY").getNodeValue());
             
             System.out.println("Loading map: " + name);
 
@@ -84,6 +82,7 @@ public class Map extends Ownable{
         }
         catch(Exception e)
         {
+            System.out.println(new File(".").getAbsoluteFile());
             System.out.println(e);
         }
         
@@ -101,21 +100,37 @@ public class Map extends Ownable{
     }
 
     // Gets all images that should be loaded for this coordinate.
-    public GridBlock[][] getView(float x, float y)
+    public GridBlock[][] getView(int xView, int yView)
     {
-        GridBlock[][] viewWindow = new GridBlock[][];
+        GridBlock[][] viewWindow = renderer.getDesiredView();
 
-        return null;
-    }
-
-    public static void main(String[] args)
-    {
-        try{
-            Map testMap = new Map(null, new File("maps/map1.xml"), 4);
-        }
-        catch(Exception e)
+        // Column length or x length.
+        int centerX = viewWindow[0].length/2;
+        // Row length or y length.
+        int centerY = viewWindow.length/2;
+        
+        for(int r = 0; r < viewWindow.length; r++)
         {
-            System.out.println(e);
+            for(int c = 0; c < viewWindow[0].length; c++)
+            {
+                // View would go out of entireMap range.
+                if(xView-centerX+r < 0 || xView-centerX+r > entireMap.length - 1)
+                {
+                    viewWindow[r][c] = null;
+                    continue;
+                }
+
+                if(yView+centerY-c > entireMap[0].length - 1 || yView+centerY-c < 0)
+                {
+                    viewWindow[r][c] = null;
+                    continue;
+                }
+
+                viewWindow[r][c] = entireMap[xView-centerX+r][yView+centerY-c];
+                //viewWindow[r][c] = entireMap[yView+centerY-c][xView-centerX+r];
+            }
         }
+
+        return viewWindow;
     }
 }

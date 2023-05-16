@@ -7,8 +7,8 @@ public class Ownable {
         this.owningObject = owningObject;
     }
 
-    public <T> T getOwner()
+    public Object getOwner()
     {
-        return (T) owningObject;
+        return owningObject;
     }
 }

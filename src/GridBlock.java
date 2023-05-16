@@ -9,8 +9,6 @@ public class GridBlock {
     private int yLoc;
     private Image image;
 
-    private int gridSize;
-
     public GridBlock(int xLoc, int yLoc, File spritePath, int gridSize)
     {
         this.xLoc = xLoc;
@@ -26,6 +24,16 @@ public class GridBlock {
         {
             System.out.println(e);
         }
+    }
+
+    public int getX()
+    {
+        return xLoc;
+    }
+
+    public int getY()
+    {
+        return yLoc;
     }
 
     public Image getImage()
