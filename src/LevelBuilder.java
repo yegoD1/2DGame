@@ -32,12 +32,14 @@ public class LevelBuilder {
 
             // Information element.
             Element informationElement = dom.createElement("Information");
-            addToNode(dom, informationElement, "MapName", "TestMap1");
+            Element mapInfo = addToNode(dom, informationElement, "MapInformation", "Name", "TestMap1");
+            mapInfo.setAttribute("SpawnX", "3");
+            mapInfo.setAttribute("SpawnY", "0");
             dom.appendChild(informationElement);
 
             Element mapDataElement = dom.createElement("MapData");
              
-            for(int i = 0; i < 5; i++)
+            for(int i = 0; i < 500; i++)
             {
                 createBlock(dom, mapDataElement, i, i, "grass");
             }
@@ -52,17 +54,23 @@ public class LevelBuilder {
         }
     }
 
-    private static void addToNode(Document dom, Node owner, String elementName, String textVal)
+    private static Element addToNode(Document dom, Node owner, String nodeName, String elementName, String textVal)
     {
-        Element newElement = dom.createElement(elementName);
-        newElement.appendChild(dom.createTextNode(textVal));
+        Element newElement = dom.createElement(nodeName);
+        newElement.setAttribute(elementName, textVal);
         owner.appendChild(newElement);
+        return newElement;
     }
 
     private static void createBlock(Document dom, Node owner, int x, int y, String type)
     {
         Element blockEntry = dom.createElement("Block");
 
+        blockEntry.setAttribute("X", String.valueOf(x));
+        blockEntry.setAttribute("Y", String.valueOf(y));
+        blockEntry.setAttribute("Type", type);
+
+        /* 
         Element xEle = dom.createElement("X");
         xEle.appendChild(dom.createTextNode(String.valueOf(x)));
         blockEntry.appendChild(xEle);
@@ -74,6 +82,7 @@ public class LevelBuilder {
         Element typeEle = dom.createElement("Type");
         typeEle.appendChild(dom.createTextNode(type));
         blockEntry.appendChild(typeEle);
+        */
 
         owner.appendChild(blockEntry);
     }

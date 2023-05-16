@@ -24,8 +24,8 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
     private static final float DELTATIME = 0.010f;
 
     // Size for each grid block.
-    private static final int GRIDSIZE = 4;
-    // How many grid spaces to draw offscreen. Improves movement on edges of the screen.
+    private static final int GRIDSIZE = 32;
+    // How many grid spaces to draw offscreen. Reduces pop-in on the edges of the screen.
     private static final int OVERDRAW = 2;
     
     private BufferedImage image;
@@ -36,13 +36,14 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
 
     public Core()
     {
-        image =  new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-		g = image.getGraphics();
+        image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		g = image.createGraphics();
 
         addMouseListener(this);
         addKeyListener(this);
 
-        renderer = new Renderer(g, new Image[WIDTH/GRIDSIZE + OVERDRAW][HEIGHT/GRIDSIZE + OVERDRAW]);
+        renderer = new Renderer(g, new Image[WIDTH/GRIDSIZE + OVERDRAW][HEIGHT/GRIDSIZE + OVERDRAW], GRIDSIZE);
+        renderer.loadMap("maps/map1.xml");
 
         timer = new Timer((int)(DELTATIME * 1000), new TimerListener());
 		timer.start();
@@ -68,6 +69,7 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(new Core());
 		frame.setVisible(true);
+
     }
 
     public void paintComponent(Graphics g) {
