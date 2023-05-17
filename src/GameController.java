@@ -24,6 +24,8 @@ public class GameController extends Tickable {
         {
             player.move(-1);
         }
+
+        player.tick(deltaTime);
     }
 
     public void recieveInput(KeyEvent e, boolean isDown)

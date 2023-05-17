@@ -20,7 +20,7 @@ public class Renderer extends Tickable {
     private PlayerCharacter player;
 
     private final boolean DEBUG = true;
-    private final boolean SMOOTHMOVE = false;
+    private final boolean SMOOTHMOVE = true;
 
     public Renderer(Graphics g, GridBlock[][] activeBlocks, int gridSize, int overDraw)
     {

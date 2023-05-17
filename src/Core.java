@@ -24,8 +24,9 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
 
     // Size for each grid block.
     private static final int GRIDSIZE = 32;
+
     // How many grid spaces to draw offscreen. Reduces pop-in on the edges of the screen (must be divisible by 2).
-    private static final int OVERDRAW = 2;
+    private static final int OVERDRAW = 4;
     
     private BufferedImage image;
 	private Graphics g;
@@ -39,13 +40,13 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
         image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = image.createGraphics();
 
-        addMouseListener(this);
-        addKeyListener(this);
-
         renderer = new Renderer(g, new GridBlock[WIDTH/GRIDSIZE + OVERDRAW][HEIGHT/GRIDSIZE + OVERDRAW], GRIDSIZE, OVERDRAW);
+        renderer.loadMap("maps/map1.xml");
+
         controller = new GameController(renderer.getPlayer());
 
-        renderer.loadMap("maps/map1.xml");
+        addMouseListener(this);
+        addKeyListener(this);
 
         timer = new Timer((int)(DELTATIME * 1000), new TimerListener());
 		timer.start();
@@ -59,6 +60,7 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
             g.fillRect(0, 0, WIDTH, HEIGHT);
 
             renderer.tick(DELTATIME);
+            controller.tick(DELTATIME);
 
             repaint();
         }
@@ -71,7 +73,6 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(new Core());
 		frame.setVisible(true);
-        frame.setFocusable(true);
     }
 
     public void paintComponent(Graphics g) {
@@ -81,8 +82,7 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        
+        requestFocus();
     }
 
 

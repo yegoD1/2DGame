@@ -14,7 +14,7 @@ public class PlayerCharacter extends Tickable{
         xLoc = startXLoc;
         yLoc = startYLoc;
         maxSpeed = 20;
-        gravity = 4;
+        gravity = 1;
         acceleration = 5;
     }
 
