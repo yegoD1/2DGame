@@ -11,14 +11,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 // Defines all the data and functions needed for a map. Map "starts" at (0,0) and can continue infinetely with positive coords only.
 public class Map extends Ownable{
 
-    private int gridSize;
+    private float gridSize;
     private String name;
     private GridBlock[][] entireMap;
     private Renderer renderer;
     private int xStart;
     private int yStart;
 
-    public Map(Object owningObject, File mapDir, int gridSize)
+    public Map(Object owningObject, File mapDir, float gridSize)
     {
         super(owningObject);
         this.gridSize = gridSize;
@@ -77,7 +77,7 @@ public class Map extends Ownable{
                 int xPos = Integer.parseInt(curBlock.getNamedItem("X").getNodeValue());
                 int yPos = Integer.parseInt(curBlock.getNamedItem("Y").getNodeValue());
                 String type = curBlock.getNamedItem("Type").getNodeValue();
-                entireMap[xPos][yPos] = new GridBlock(xPos, yPos, new File("sprites/" + type + ".png"), gridSize);
+                entireMap[xPos][yPos] = new GridBlock(this, xPos, yPos, new File("sprites/" + type + ".png"), gridSize);
             }
         }
         catch(Exception e)
@@ -99,15 +99,30 @@ public class Map extends Ownable{
         return yStart;
     }
 
+    // Checks at the specified x & y coord that there is a block. Returns true if there is a block.
+    public boolean isBlock(int x, int y)
+    {
+        if((x >= 0 && x < entireMap.length) && (y >= 0 && y < entireMap[0].length))
+        {
+            return entireMap[x][y] != null;
+        }
+        return false;
+    }
+
+    public GridBlock getBlock(int x, int y)
+    {
+        return entireMap[x][y];
+    }
+
     // Gets all images that should be loaded for this coordinate.
     public GridBlock[][] getView(int xView, int yView)
     {
         GridBlock[][] viewWindow = renderer.getDesiredView();
 
         // Column length or x length.
-        int centerX = viewWindow[0].length/2;
+        int centerX = viewWindow.length/2;
         // Row length or y length.
-        int centerY = viewWindow.length/2;
+        int centerY = viewWindow[0].length/2;
         
         for(int r = 0; r < viewWindow.length; r++)
         {

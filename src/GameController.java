@@ -12,10 +12,14 @@ public class GameController extends Tickable {
     public GameController(PlayerCharacter player)
     {
         this.player = player;
+        rightKey = false;
+        leftKey = false;
+        upKey = false;
+        downKey = false;
     }
 
     @Override
-    public void tick(float deltaTime) {
+    public void tick(double deltaTime) {
         if(rightKey)
         {
             player.move(1);
@@ -23,6 +27,10 @@ public class GameController extends Tickable {
         if(leftKey)
         {
             player.move(-1);
+        }
+        if(upKey)
+        {
+            player.jump();
         }
 
         player.tick(deltaTime);
@@ -35,12 +43,16 @@ public class GameController extends Tickable {
             switch (e.getKeyChar()){
                 case 'a':
                     leftKey = true;
+                    break;
                 case 'w':
                     upKey = true;
+                    break;
                 case 'd':
                     rightKey = true;
+                    break;
                 case 's':
                     downKey = true;
+                    break;
             }   
         }
         else
@@ -48,12 +60,16 @@ public class GameController extends Tickable {
             switch (e.getKeyChar()){
                 case 'a':
                     leftKey = false;
+                    break;
                 case 'w':
                     upKey = false;
+                    break;
                 case 'd':
                     rightKey = false;
+                    break;
                 case 's':
                     downKey = false;
+                    break;
             }
         }
         

@@ -3,13 +3,13 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-public class GridBlock {
+public class GridBlock{
 
     private int xLoc;
     private int yLoc;
     private Image image;
 
-    public GridBlock(int xLoc, int yLoc, File spritePath, int gridSize)
+    public GridBlock(Object owner, int xLoc, int yLoc, File spritePath, float gridSize)
     {
         this.xLoc = xLoc;
         this.yLoc = yLoc;
@@ -18,7 +18,7 @@ public class GridBlock {
         try
         {
             image = ImageIO.read(spritePath);
-            image = image.getScaledInstance(gridSize, gridSize, BufferedImage.SCALE_FAST);
+            image = image.getScaledInstance((int)gridSize, (int)gridSize, BufferedImage.SCALE_FAST);
         }
         catch(Exception e)
         {

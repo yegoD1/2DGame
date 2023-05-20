@@ -4,7 +4,7 @@ import java.io.File;
 
 public class Renderer extends Tickable {
     private Graphics g;
-    private int gridSize;
+    private float gridSize;
     private GridBlock[][] activeBlocks;
     private int overDraw;
 
@@ -17,7 +17,7 @@ public class Renderer extends Tickable {
 
     private Map activeMap;
 
-    private PlayerCharacter player;
+    private PhysicalObject focusedObject;
 
     private final boolean DEBUG = true;
     private final boolean SMOOTHMOVE = true;
@@ -35,7 +35,7 @@ public class Renderer extends Tickable {
     }
 
     @Override
-    public void tick(float deltaTime) {
+    public void tick(double deltaTime) {
         if(shouldGetNewView())
         {
             if(xCamLoc < oldXCoord)
@@ -87,15 +87,18 @@ public class Renderer extends Tickable {
         {
             g.setColor(Color.WHITE);
             g.drawRect(400-32, 400-32, 32, 32);
-            g.drawString("Character location: x:" + xCamLoc + " y: " + yCamLoc, 25, 50);
+            g.drawString("Character location: x: " + xCamLoc + " y: " + yCamLoc, 25, 50);
             g.drawString("Offsets. X: " + offsetX + " Y: " + offsetY, 25, 75);
+            g.drawString("Character Velocity: x: " + focusedObject.getXVel() + " y: " + focusedObject.getYVel() , 25, 100);
         }
     }
 
     private void updateCam()
     {
-        xCamLoc = player.getXLoc();
-        yCamLoc = player.getYLoc();
+        xCamLoc = focusedObject.getX();
+        yCamLoc = focusedObject.getY();
+
+        //gridSize = Math.min(32, Math.max(focusedObject.getXVel() + focusedObject.getYVel() * 5, 64));
     }
 
     public boolean shouldGetNewView()
@@ -108,7 +111,7 @@ public class Renderer extends Tickable {
         return activeBlocks;
     }
 
-    public int getGridSize()
+    public float getGridSize()
     {
         return gridSize;
     }
@@ -118,16 +121,16 @@ public class Renderer extends Tickable {
         return overDraw;
     }
 
-    public PlayerCharacter getPlayer()
+    public PhysicalObject getFocusedObject()
     {
-        return player;
+        return focusedObject;
     }
 
     public void loadMap(String filePath)
     {
         activeMap = new Map(this, new File(filePath), gridSize);
 
-        player = new PlayerCharacter(activeMap.getStartX(), activeMap.getStartY());
+        focusedObject = new PlayerCharacter(activeMap);
         activeBlocks = activeMap.getView((int)xCamLoc, (int)yCamLoc);
     }
 }

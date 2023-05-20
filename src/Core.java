@@ -16,11 +16,11 @@ import java.awt.image.BufferedImage;
 
 // This class is the lowest level needed for the game. Handles everything else.
 public class Core extends JPanel implements MouseInputListener, KeyListener{
-    private static final int WIDTH = 800;
+    private static final int WIDTH = 1400;
     private static final int HEIGHT = 800;
 
-    // Time between ticks in seconds.
-    private static final float DELTATIME = 0.010f;
+    // Number of frames per second.
+    private static final int FRAMERATE = 60;
 
     // Size for each grid block.
     private static final int GRIDSIZE = 32;
@@ -43,31 +43,50 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
         renderer = new Renderer(g, new GridBlock[WIDTH/GRIDSIZE + OVERDRAW][HEIGHT/GRIDSIZE + OVERDRAW], GRIDSIZE, OVERDRAW);
         renderer.loadMap("maps/map1.xml");
 
-        controller = new GameController(renderer.getPlayer());
+        controller = new GameController((PlayerCharacter) renderer.getFocusedObject());
 
         addMouseListener(this);
         addKeyListener(this);
 
-        timer = new Timer((int)(DELTATIME * 1000), new TimerListener());
+        timer = new Timer((int)(1.0/FRAMERATE * 1000), new TimerListener());
 		timer.start();
     }
 
     private class TimerListener implements ActionListener{
 
+        private long previousTickTime;
+
+        TimerListener()
+        {
+            previousTickTime = System.currentTimeMillis();
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
+            long curTick = System.currentTimeMillis();
+            // Ticks are adjusted dynamically.
+            double timeSinceLastTick = (double)(curTick - previousTickTime)/1000;
+
+            // Don't allow large ticks.
+            timeSinceLastTick = Math.min(timeSinceLastTick, 0.1);
+            previousTickTime = curTick;
+
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, WIDTH, HEIGHT);
+            
 
-            renderer.tick(DELTATIME);
-            controller.tick(DELTATIME);
+            renderer.tick(timeSinceLastTick);
+            controller.tick(timeSinceLastTick);
+
+            g.setColor(Color.WHITE);
+            g.drawString("FPS: " + 1/timeSinceLastTick, 25, 125);
 
             repaint();
         }
     }
 
     public static void main(String[] args) throws Exception {
-        JFrame frame = new JFrame("Top Down Game");
+        JFrame frame = new JFrame("2D Game");
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setLocation(0, 0);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
