@@ -16,7 +16,7 @@ import java.awt.image.BufferedImage;
 
 // This class is the lowest level needed for the game. Handles everything else.
 public class Core extends JPanel implements MouseInputListener, KeyListener{
-    private static final int WIDTH = 1400;
+    private static final int WIDTH = 800;
     private static final int HEIGHT = 800;
 
     // Number of frames per second.
@@ -73,10 +73,18 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
 
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, WIDTH, HEIGHT);
+          
             
-
-            renderer.tick(timeSinceLastTick);
-            controller.tick(timeSinceLastTick);
+            if(isFocusOwner())
+            {
+                renderer.tick(timeSinceLastTick);
+                controller.tick(timeSinceLastTick);
+            }
+            else
+            {
+                g.setColor(Color.RED);
+                g.drawString("Game not focused. Double click to focus.", 20, 20);
+            }
 
             g.setColor(Color.WHITE);
             g.drawString("FPS: " + 1/timeSinceLastTick, 25, 125);

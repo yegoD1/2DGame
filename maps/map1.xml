@@ -18,7 +18,11 @@
         <Block Type="grass" X="13" Y="0"/>
         <Block Type="grass" X="14" Y="0"/>
         <Block Type="grass" X="15" Y="0"/>
-        <Block Type="grass" X="16" Y="0"/>
+        <Block Type="grass" X="17" Y="0"/>
+        <Block Type="grass" X="18" Y="0"/>
+        <Block Type="grass" X="19" Y="0"/>
+        <Block Type="grass" X="20" Y="0"/>
+        <Block Type="grass" X="21" Y="0"/>
         <Block Type="grass" X="1" Y="1"/>
         <Block Type="grass" X="2" Y="2"/>
         <Block Type="grass" X="3" Y="1"/>
