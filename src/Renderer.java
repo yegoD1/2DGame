@@ -130,7 +130,7 @@ public class Renderer extends Tickable {
     {
         activeMap = new Map(this, new File(filePath), gridSize);
 
-        focusedObject = new PlayerCharacter(activeMap);
+        focusedObject = new PhysicsCharacter(activeMap);
         activeBlocks = activeMap.getView((int)xCamLoc, (int)yCamLoc);
     }
 }

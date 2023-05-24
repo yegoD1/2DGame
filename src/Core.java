@@ -20,7 +20,7 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
     private static final int HEIGHT = 800;
 
     // Number of frames per second.
-    private static final int FRAMERATE = 60;
+    private static final int FRAMERATE = 10;
 
     // Size for each grid block.
     private static final int GRIDSIZE = 32;
@@ -43,7 +43,7 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
         renderer = new Renderer(g, new GridBlock[WIDTH/GRIDSIZE + OVERDRAW][HEIGHT/GRIDSIZE + OVERDRAW], GRIDSIZE, OVERDRAW);
         renderer.loadMap("maps/map1.xml");
 
-        controller = new GameController((PlayerCharacter) renderer.getFocusedObject());
+        controller = new GameController((PhysicsCharacter) renderer.getFocusedObject());
 
         addMouseListener(this);
         addKeyListener(this);

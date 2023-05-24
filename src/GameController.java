@@ -7,9 +7,9 @@ public class GameController extends Tickable {
     private boolean upKey;
     private boolean downKey;
 
-    private PlayerCharacter player;
+    private PhysicsCharacter player;
 
-    public GameController(PlayerCharacter player)
+    public GameController(PhysicsCharacter player)
     {
         this.player = player;
         rightKey = false;
@@ -22,15 +22,19 @@ public class GameController extends Tickable {
     public void tick(double deltaTime) {
         if(rightKey)
         {
-            player.move(1);
+            player.move(1, deltaTime);
         }
         if(leftKey)
         {
-            player.move(-1);
+            player.move(-1, deltaTime);
         }
         if(upKey)
         {
             player.jump();
+        }
+        if(downKey)
+        {
+            player.slam();
         }
 
         player.tick(deltaTime);
