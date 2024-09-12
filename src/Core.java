@@ -20,7 +20,7 @@ public class Core extends JPanel implements MouseInputListener, KeyListener{
     private static final int HEIGHT = 800;
 
     // Number of frames per second.
-    private static final int FRAMERATE = 10;
+    private static final int FRAMERATE = 60;
 
     // Size for each grid block.
     private static final int GRIDSIZE = 32;
